@@ -13,7 +13,7 @@
     },
     {
         "name": "sobol",
-        "text": "Sampler \"soboll\"\n    \"integer pixelsamples\" [32]\n"
+        "text": "Sampler \"sobol\"\n    \"integer pixelsamples\" [32]\n"
     },
     {
         "name": "stratified",
