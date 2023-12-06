@@ -1,0 +1,26 @@
+[
+    {
+        "name": "halton",
+        "text": "Sampler \"halton\"\n    \"integer pixelsamples\" [ 32 ]\n"
+    },
+    {
+        "name": "independent",
+        "text": "Sampler \"independent\"\n"
+    },
+    {
+        "name": "paddedsobol",
+        "text": "Sampler \"paddedsobol\"\n    \"integer pixelsamples\" [32]\n"
+    },
+    {
+        "name": "sobol",
+        "text": "Sampler \"soboll\"\n    \"integer pixelsamples\" [32]\n"
+    },
+    {
+        "name": "stratified",
+        "text": "Sampler \"stratified\"\n    \"integer pixelsamples\" [32]\n"
+    },
+    {
+        "name": "zsobol",
+        "text": "Sampler \"zsobol\"\n    \"integer pixelsamples\" [32]\n"
+    }
+]

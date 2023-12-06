@@ -1,0 +1,10 @@
+[
+    {
+        "name": "bistro_cafe",
+        "path": "bistro/bistro_cafe.pbrt"
+    },
+    {
+        "name": "bmw-m6",
+        "path": "bmw-m6/bmw-m6.pbrt"
+    }
+]
