@@ -35,6 +35,23 @@ with open(file_path_scene, 'r') as file:
     # Load JSON data from the file
     scenes = json.load(file)
 
+def create_directory(directory_path):
+    # Test if the directory exists
+    if os.path.exists(directory_path):
+        choice = input("The directory already exists. Do you want to overwrite it? (Y/N): ").lower()
+        if choice == 'y':
+            # Remove the existing directory and recreate it
+            os.rmdir(directory_path)
+            os.mkdir(directory_path)
+            print(f"Directory {directory_path} recreated.")
+        else:
+            print("Program terminated.")
+            sys.exit(1)
+    else:
+        # Create the directory if it doesn't exist
+        os.mkdir(directory_path)
+        print(f"Directory {directory_path} created.")    
+
 
 # Répertoire temporaire pour stocker les fichiers modifiés
 temp_dir = "temp_directory"
@@ -97,40 +114,49 @@ def add_in_file(file, before_string, element):
     with open(file, 'w') as file_content:
         file_content.write(modified_content)        
 
-for scene in scenes:
+def run_pbrt(scenes_list, sampler_list, integrator_list) :
 
-    scene_full_path = os.path.join(scenes_path, scene['path'])
-    dirname = os.path.dirname(scene_full_path)
-    filename = os.path.basename(scene_full_path)
-    basename, old_ext = os.path.splitext(filename)
-    shutil.copytree(dirname, temp_dir)
-    os.makedirs(os.path.join(output_dir,basename))
+    for scene in scenes_list:
 
-
-    for sampler in samplers:
-
-        s_name = sampler['name']
-        s_text = sampler['text']
-
-        remove_in_file(os.path.join(temp_dir,filename), "Sampler")
-        add_in_file(os.path.join(temp_dir,filename), "WorldBegin", s_text)
-
-        # Display all key-value pairs
-        for integrator in integrators:
-
-            i_name = integrator['name']
-            i_text = integrator['text']
+        scene_full_path = os.path.join(scenes_path, scene['path'])
+        dirname = os.path.dirname(scene_full_path)
+        filename = os.path.basename(scene_full_path)
+        basename, old_ext = os.path.splitext(filename)
+        shutil.copytree(dirname, temp_dir)
+        os.makedirs(os.path.join(output_dir,basename))
 
 
-            remove_in_file(os.path.join(temp_dir,filename), "Integrator")
-            add_in_file(os.path.join(temp_dir,filename), "WorldBegin", i_text)
-            
-            outfile = os.path.join(output_dir,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
+        for sampler in sampler_list:
 
-            cmd = "".join([pbrt_exec," --spp ",str(spp)," ",
-                        "--outfile ",outfile," ",
-                        os.path.join(temp_dir,filename)])
-            subprocess.run(cmd, shell=True)
+            s_name = sampler['name']
+            s_text = sampler['text']
 
-    # Clean    
-    shutil.rmtree(temp_dir)
+            remove_in_file(os.path.join(temp_dir,filename), "Sampler")
+            add_in_file(os.path.join(temp_dir,filename), "WorldBegin", s_text)
+
+            # Display all key-value pairs
+            for integrator in integrator_list:
+
+                i_name = integrator['name']
+                i_text = integrator['text']
+
+                remove_in_file(os.path.join(temp_dir,filename), "Integrator")
+                add_in_file(os.path.join(temp_dir,filename), "WorldBegin", i_text)
+                
+                outfile = os.path.join(output_dir,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
+
+                cmd = "".join([pbrt_exec," --spp ",str(spp)," ",
+                            "--outfile ",outfile," ",
+                            os.path.join(temp_dir,filename)])
+                subprocess.run(cmd, shell=True)
+
+        # Clean    
+        shutil.rmtree(temp_dir)
+
+def main():
+    print("Launch pbrt")
+    run_pbrt(scenes, samplers, integrators)
+
+
+if __name__ == "__main__":
+    main()   
