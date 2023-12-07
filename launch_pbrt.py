@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 import json
+import argparse
 
 # sample per pixel
 spp = 4
@@ -114,10 +115,9 @@ def add_in_file(file, before_string, element):
     with open(file, 'w') as file_content:
         file_content.write(modified_content)        
 
-def run_pbrt(scenes_list, sampler_list, integrator_list) :
+def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
 
     for scene in scenes_list:
-
         scene_full_path = os.path.join(scenes_path, scene['path'])
         dirname = os.path.dirname(scene_full_path)
         filename = os.path.basename(scene_full_path)
@@ -145,7 +145,7 @@ def run_pbrt(scenes_list, sampler_list, integrator_list) :
                 
                 outfile = os.path.join(output_dir,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
 
-                cmd = "".join([pbrt_exec," --spp ",str(spp)," ",
+                cmd = "".join([pbrt_exec," --spp ",str(args.spp)," ",
                             "--outfile ",outfile," ",
                             os.path.join(temp_dir,filename)])
                 subprocess.run(cmd, shell=True)
@@ -155,7 +155,11 @@ def run_pbrt(scenes_list, sampler_list, integrator_list) :
 
 def main():
     print("Launch pbrt")
-    run_pbrt(scenes, samplers, integrators)
+    parser = argparse.ArgumentParser(description='Example script with a command line parameter.')
+     # Add a command line argument
+    parser.add_argument('--spp', type=int, default=64, help='sample per pixel')
+    args = parser.parse_args()
+    run_pbrt(scenes, samplers, integrators, args)
 
 
 if __name__ == "__main__":
