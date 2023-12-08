@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import subprocess
 import json
@@ -34,10 +35,13 @@ with open(file_path_scene, 'r') as file:
     # Load JSON data from the file
     scenes = json.load(file)
 
-def create_directory(directory_path):
+def create_directory(directory_path, force):
     # Test if the directory exists
     if os.path.exists(directory_path):
-        choice = input("The directory already exists. Do you want to overwrite it? (Y/N): ").lower()
+        if force :
+            choice = 'y'
+        else :
+            choice = input(f"The directory {directory_path} already exists. Do you want to overwrite it? (Y/N): ").lower()
         if choice == 'y':
             # Remove the existing directory and recreate it
             os.rmdir(directory_path)
@@ -115,7 +119,7 @@ def add_in_file(file, before_string, element):
 
 def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
 
-    create_directory(args.output)
+    create_directory(args.output, args.force)
 
     for scene in scenes_list:
         scene_full_path = os.path.join(scenes_path, scene['path'])
@@ -123,7 +127,7 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
         filename = os.path.basename(scene_full_path)
         basename, old_ext = os.path.splitext(filename)
         shutil.copytree(dirname, temp_dir)
-        os.makedirs(os.path.join(output_dir,basename))
+        os.makedirs(os.path.join(args.output,basename))
 
 
         for sampler in sampler_list:
@@ -160,6 +164,7 @@ def main():
     parser.add_argument('--spp', type=int, default=64, help='sample per pixel')
     parser.add_argument('-f', '--force', action='store_true', help='Force mode.')
     parser.add_argument('-o','--output', default='./output', help='Output directory path with default value "./output".')
+    parser.add_argument('-p','--pbrt', default='pbrt', help='path and name of pbrt binary (default = "pbrt")')
     args = parser.parse_args()
     run_pbrt(scenes, samplers, integrators, args)
 
