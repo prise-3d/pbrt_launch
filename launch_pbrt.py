@@ -36,6 +36,17 @@ with open(file_path_scene, 'r') as file:
     scenes = json.load(file)
 
 def create_directory(directory_path, force):
+    """
+    Create a directory at the specified path. If the directory already exists, prompt the user to confirm overwriting.
+
+    Parameters:
+    - directory_path (str): The path of the directory to be created or overwritten.
+    - force (bool): If True, overwrite the directory without confirmation. If False, prompt the user for confirmation.
+
+    Raises:
+    - SystemExit: If the user chooses not to overwrite the existing directory, the program is terminated with exit code 1.
+    """
+
     # Test if the directory exists
     if os.path.exists(directory_path):
         if force :
@@ -44,7 +55,7 @@ def create_directory(directory_path, force):
             choice = input(f"The directory {directory_path} already exists. Do you want to overwrite it? (Y/N): ").lower()
         if choice == 'y':
             # Remove the existing directory and recreate it
-            os.rmdir(directory_path)
+            shutil.rmtree(directory_path)
             os.mkdir(directory_path)
             print(f"Directory {directory_path} recreated.")
         else:
@@ -88,6 +99,18 @@ def remove_lines_starting_with(text, start_string):
 
 
 def remove_in_file(file, element):
+
+    """
+    Remove lines in the given text that start with the specified string, along with any following indented lines.
+
+    Parameters:
+    - text (str): The input text containing multiple lines.
+    - start_string (str): The string indicating the lines to be removed.
+
+    Returns:
+    str: The modified text with lines starting with the specified string removed.
+    """
+
     
     with open(file, 'r') as scene_file:
         scene_content = scene_file.read()
@@ -126,9 +149,10 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
         dirname = os.path.dirname(scene_full_path)
         filename = os.path.basename(scene_full_path)
         basename, old_ext = os.path.splitext(filename)
-        shutil.copytree(dirname, temp_dir)
         os.makedirs(os.path.join(args.output,basename))
-
+        if os.path.exists(temp_dir):
+            shutil.rmtree(temp_dir)
+        shutil.copytree(dirname, temp_dir)    
 
         for sampler in sampler_list:
 
@@ -147,7 +171,7 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
                 remove_in_file(os.path.join(temp_dir,filename), "Integrator")
                 add_in_file(os.path.join(temp_dir,filename), "WorldBegin", i_text)
                 
-                outfile = os.path.join(output_dir,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
+                outfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
 
                 cmd = "".join([pbrt_exec," --spp ",str(args.spp)," ",
                             "--outfile ",outfile," ",
