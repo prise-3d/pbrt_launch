@@ -10,9 +10,6 @@ import argparse
 # output_dir = "./out"
 # os.makedirs(output_dir)
 
-# path to pbrt v4 
-pbrt_exec = "/home/samuel/Documents/pbrt-v4/build/pbrt"
-
 # path to pbrt v4 scenes
 scenes_path = "/home/samuel/Documents/pbrt-v4-scenes"
 
@@ -122,6 +119,15 @@ def remove_in_file(file, element):
 
 
 def add_in_file(file, before_string, element):
+    """
+    Add the specified element in the file before the line starting with the given string.
+
+    Parameters:
+    - file (str): The path to the file where the element is to be added.
+    - before_string (str): The string indicating the line before which the element should be added.
+    - element (str): The element to be added in the file.
+    """
+
     with open(file, 'r') as file_content:
         content = file_content.read()
 
@@ -141,6 +147,15 @@ def add_in_file(file, before_string, element):
         file_content.write(modified_content)        
 
 def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
+    """
+    Run the PBRT renderer on a list of scenes with different samplers and integrators.
+
+    Parameters:
+    - scenes_list (list): A list of dictionaries containing information about scenes.
+    - sampler_list (list): A list of dictionaries containing information about samplers.
+    - integrator_list (list): A list of dictionaries containing information about integrators.
+    - args (Namespace): Command-line arguments.
+    """
 
     create_directory(args.output, args.force)
 
@@ -173,15 +188,26 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
                 
                 outfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
 
-                cmd = "".join([pbrt_exec," --spp ",str(args.spp)," ",
+                cmd = "".join([args.pbrt," --spp ",str(args.spp)," ",
                             "--outfile ",outfile," ",
                             os.path.join(temp_dir,filename)])
-                subprocess.run(cmd, shell=True)
+                result = subprocess.run(cmd, shell=True)
+
+                # Check the return code
+                if result.returncode == 0:
+                    print("Command executed successfully.")
+                else:
+                    print(f"Error: Command returned a non-zero exit code {result.returncode}.")
+                    if result.returncode == 127 :
+                        print("add pbrt to your path or use --pbrt option")
 
         # Clean    
         shutil.rmtree(temp_dir)
 
 def main():
+    """
+    Parse the command line arguments and call run_pbrt
+    """
     print("Launch pbrt")
     parser = argparse.ArgumentParser(description='Script to launch pbrt and produce images from a varety of Sampler and Integrator for a list of scenes')
      # Add a command line argument
