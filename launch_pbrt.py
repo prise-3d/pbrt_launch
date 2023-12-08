@@ -4,12 +4,10 @@ import subprocess
 import json
 import argparse
 
-# sample per pixel
-spp = 4
 
 # output directory
-output_dir = "./out"
-os.makedirs(output_dir)
+# output_dir = "./out"
+# os.makedirs(output_dir)
 
 # path to pbrt v4 
 pbrt_exec = "/home/samuel/Documents/pbrt-v4/build/pbrt"
@@ -117,6 +115,8 @@ def add_in_file(file, before_string, element):
 
 def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
 
+    create_directory(args.output)
+
     for scene in scenes_list:
         scene_full_path = os.path.join(scenes_path, scene['path'])
         dirname = os.path.dirname(scene_full_path)
@@ -155,9 +155,11 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
 
 def main():
     print("Launch pbrt")
-    parser = argparse.ArgumentParser(description='Example script with a command line parameter.')
+    parser = argparse.ArgumentParser(description='Script to launch pbrt and produce images from a varety of Sampler and Integrator for a list of scenes')
      # Add a command line argument
     parser.add_argument('--spp', type=int, default=64, help='sample per pixel')
+    parser.add_argument('-f', '--force', action='store_true', help='Force mode.')
+    parser.add_argument('-o','--output', default='./output', help='Output directory path with default value "./output".')
     args = parser.parse_args()
     run_pbrt(scenes, samplers, integrators, args)
 
