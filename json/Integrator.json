@@ -5,6 +5,14 @@
     },
     {
         "name": "bdpt",
-        "text": "Integrator \"bdpt\"\n"
+        "text": "Integrator \"bdpt\"\n    \"integer maxdepth\" [ 8 ]\n"
+    },
+    {
+        "name": "mlt",
+        "text": "Integrator \"mlt\"\n    \"integer maxdepth\" [ 8 ]\n"
+    },
+    {
+        "name": "sppm",
+        "text": "Integrator \"sppm\"\n    \"integer maxdepth\" [ 8 ]\n"
     }
 ]
