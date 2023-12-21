@@ -186,7 +186,7 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
                 remove_in_file(os.path.join(temp_dir,filename), "Integrator")
                 add_in_file(os.path.join(temp_dir,filename), "WorldBegin", i_text)
                 
-                outfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+".exr"))
+                outfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+"."+args.format))
 
                 cmd = "".join([args.pbrt," --spp ",str(args.spp)," ",
                             "--outfile ",outfile," ",
@@ -212,6 +212,7 @@ def main():
     parser = argparse.ArgumentParser(description='Script to launch pbrt and produce images from a varety of Sampler and Integrator for a list of scenes')
      # Add a command line argument
     parser.add_argument('--spp', type=int, default=64, help='sample per pixel')
+    parser.add_argument('--format', default='exr', help='File extension for output file (default exr)')
     parser.add_argument('-f', '--force', action='store_true', help='Force mode.')
     parser.add_argument('-o','--output', default='./output', help='Output directory path with default value "./output".')
     parser.add_argument('-b','--basedir', default='./output', help='Base directory for pbrt scenes.')
