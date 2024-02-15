@@ -57,10 +57,11 @@ def main():
         l = exr_stats(exr_file)
         csvfile = open(csv_filename, 'a', newline='')
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(exr_file,l)
+        row = [exr_file]
+        for v in l:
+            row.append(v)
+        csv_writer.writerow(row)
         csvfile.close()
-
-
 
 
 if __name__ == "__main__":
