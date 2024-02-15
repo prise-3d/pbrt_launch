@@ -2,6 +2,7 @@
 
 import OpenEXR
 import numpy as np
+import argparse
 
 print("start")
 
@@ -25,8 +26,26 @@ def exr_stats(filename):
         channel_means = np.mean(flat_image)
         print("mean: ",channel_means)        
 
+def main():
+    parser = argparse.ArgumentParser(description='Script to produce statistics from a list of exr files')
+
+    parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
+
+    args = parser.parse_args()
+    print(args.basedir)
+
+
 
 if __name__ == "__main__":
+
+    """
+
     print("test for exr_stats")
     exr_stats("test_data/bmw-m6.exr")
+    print("--------------------")
     exr_stats("test_data/bmw-m6-Integrators_Non_contributing_rays.exr")
+
+    """
+
+    main()
+    print("end")
