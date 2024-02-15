@@ -1,5 +1,6 @@
 """ Module pour extraire des informations d'un fichier EXR """
 
+import csv
 import OpenEXR
 import numpy as np
 import argparse
