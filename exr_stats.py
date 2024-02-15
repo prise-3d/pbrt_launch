@@ -23,8 +23,7 @@ def exr_stats(filename):
         image = (flat_image.reshape(height, width)).ravel()
         print(image.shape)
         channel_means = np.mean(image)
-        print("mean: ",channel_means)
-        print(stats.describe(image))
+        print("mean: ",channel_means)        
 
 
 if __name__ == "__main__":
