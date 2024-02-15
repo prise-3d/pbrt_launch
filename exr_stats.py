@@ -20,9 +20,9 @@ def exr_stats(filename):
     for k, v in channels.items():
         print(k, v)
         flat_image = np.frombuffer(exr_file.channel(k), dtype=np.float32) 
-        image = (flat_image.reshape(height, width)).ravel()
-        print(image.shape)
-        channel_means = np.mean(image)
+        #image = (flat_image.reshape(height, width)).ravel()
+        #print(image.shape)
+        channel_means = np.mean(flat_image)
         print("mean: ",channel_means)        
 
 
