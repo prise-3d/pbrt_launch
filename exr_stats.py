@@ -57,7 +57,7 @@ def main():
         l = exr_stats(exr_file)
         csvfile = open(csv_filename, 'a', newline='')
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow([exr_file,l])
+        csv_writer.writerow(exr_file,l)
         csvfile.close()
 
 
