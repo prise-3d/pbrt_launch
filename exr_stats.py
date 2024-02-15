@@ -18,19 +18,24 @@ def exr_stats(filename):
 
     print("image width ",width,"    height :",height,"    channels : ",channels)
 
+    list_values = []
+
     for k, v in channels.items():
         print(k, v)
         flat_image = np.frombuffer(exr_file.channel(k), dtype=np.float32) 
         #image = (flat_image.reshape(height, width)).ravel()
         #print(image.shape)
         channel_means = np.mean(flat_image)
-        print("mean: ",channel_means)        
+        list_values.append(channel_means)
+
+    return list_values    
 
 def main():
     parser = argparse.ArgumentParser(description='Script to produce statistics from a list of exr files')
 
     parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
     parser.add_argument('-e','--extension', default='.exr', help='end suffix of files to analyse (default .exr)')
+    parser.add_argument('-o', '--output', default='output.csv', help='Output CSV file name (default: output.csv)')
 
     args = parser.parse_args()
     end = args.extension
@@ -41,12 +46,17 @@ def main():
     exr_files = []
     for root, dirs, files in os.walk(basedir):
         for file in files:
-            if file.endswith(end):
+            if file.endswith(end):              
                 exr_files.append(os.path.join(root, file))
 
     # Print the full path of all the ".exr" files
     for exr_file in exr_files:
-        print(exr_file)
+        l = exr_stats(exr_file)
+        csvfile = open(csv_filename, 'a', newline='')
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow([exr_file,l])
+        csvfile.close()
+
 
 
 
