@@ -30,8 +30,10 @@ def main():
     parser = argparse.ArgumentParser(description='Script to produce statistics from a list of exr files')
 
     parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
+    parser.add_argument('-e','--extension', default='.exr', help='end suffix of files to analyse (default .exr)')
 
     args = parser.parse_args()
+    end = args.extension
     basedir = args.basedir
     import os
 
@@ -39,7 +41,7 @@ def main():
     exr_files = []
     for root, dirs, files in os.walk(basedir):
         for file in files:
-            if file.endswith(".exr"):
+            if file.endswith(end):
                 exr_files.append(os.path.join(root, file))
 
     # Print the full path of all the ".exr" files
