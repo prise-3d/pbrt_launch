@@ -28,4 +28,5 @@ def exr_stats(filename):
 
 if __name__ == "__main__":
     print("test for exr_stats")
+    exr_stats("test_data/bmw-m6.exr")
     exr_stats("test_data/bmw-m6-Integrators_Non_contributing_rays.exr")
