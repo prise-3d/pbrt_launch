@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import json
 import argparse
+import time
 
 
 # output directory
@@ -159,7 +160,26 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
 
     create_directory(args.output, args.force)
 
+    import csv
+    import datetime
+
+    # Generate the filename for the CSV file
+    current_datetime = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    csv_filename = f"stat_{current_datetime}.csv"
+
+    # Open the CSV file in write mode
+    with open(csv_filename, 'w', newline='') as csvfile:
+        # Create a CSV writer object
+        csv_writer = csv.writer(csvfile)
+
+        # Write the header row
+        csv_writer.writerow(['Scene', 'Sampler', 'Integrator', 'Execution Time'])
+        csvfile.close()
+
+
+            
     for scene in scenes_list:
+        scene_name = scene['name']
         scene_full_path = os.path.join(args.basedir, scene['path'])
         dirname = os.path.dirname(scene_full_path)
         filename = os.path.basename(scene_full_path)
@@ -167,10 +187,11 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
         os.makedirs(os.path.join(args.output,basename))
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
-        shutil.copytree(dirname, temp_dir)    
+        print("copie de ",dirname, " dans ",temp_dir)    
+        shutil.copytree(dirname, temp_dir) 
 
         for sampler in sampler_list:
-
+                    
             s_name = sampler['name']
             s_text = sampler['text']
 
@@ -180,6 +201,7 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
             # Display all key-value pairs
             for integrator in integrator_list:
 
+
                 i_name = integrator['name']
                 i_text = integrator['text']
 
@@ -187,11 +209,24 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
                 add_in_file(os.path.join(temp_dir,filename), "WorldBegin", i_text)
                 
                 outfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+"."+args.format))
+                logfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+".log"))
 
                 cmd = "".join([args.pbrt," --spp ",str(args.spp)," ",
                             "--outfile ",outfile," ",
                             os.path.join(temp_dir,filename)])
-                result = subprocess.run(cmd, shell=True)
+                
+                
+                #result = subprocess.run(cmd, shell=True)
+                with open(logfile,'w') as f_log:
+                    start_time_ns = time.process_time_ns()
+                    result = subprocess.run(cmd,stdout=f_log,text=True, shell=True)
+                    end_time_ns = time.process_time_ns()
+                    execution_time = end_time_ns - start_time_ns
+
+                    csvfile = open(csv_filename, 'a', newline='')
+                    csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow([scene_name, s_name, i_name, execution_time])
+                    csvfile.close()
 
                 # Check the return code
                 if result.returncode == 0:

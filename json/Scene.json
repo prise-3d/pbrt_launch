@@ -1,10 +1,74 @@
 [
     {
-        "name": "bistro_cafe",
-        "path": "bistro/bistro_cafe.pbrt"
-    },
-    {
         "name": "bmw-m6",
         "path": "bmw-m6/bmw-m6.pbrt"
-    }
+    },
+  {
+    "name": "sportscar-area-lights",
+    "path": "./sportscar/sportscar-area-lights.pbrt"
+  },
+  {
+    "name": "sportscar-sky",
+    "path": "./sportscar/sportscar-sky.pbrt"
+  },
+  {
+    "name": "bunny-cloud",
+    "path": "./bunny-cloud/bunny-cloud.pbrt"
+  },
+  {
+    "name": "disney-cloud",
+    "path": "./disney-cloud/disney-cloud.pbrt"
+  },
+  {
+    "name": "clouds",
+    "path": "./clouds/clouds.pbrt"
+  },
+  {
+    "name": "bistro_vespa",
+    "path": "./bistro/bistro_vespa.pbrt"
+  },
+  {
+    "name": "bistro_cafe",
+    "path": "./bistro/bistro_cafe.pbrt"
+  },
+  {
+    "name": "bistro_boulangerie",
+    "path": "./bistro/bistro_boulangerie.pbrt"
+  },
+  {
+    "name": "materials",
+    "path": "./contemporary-bathroom/materials.pbrt"
+  },
+  {
+    "name": "contemporary-bathroom",
+    "path": "./contemporary-bathroom/contemporary-bathroom.pbrt"
+  },
+  {
+    "name": "geometry",
+    "path": "./contemporary-bathroom/geometry.pbrt"
+  },
+  {
+    "name": "ganesha",
+    "path": "./ganesha/ganesha.pbrt"
+  },
+  {
+    "name": "crown",
+    "path": "./crown/crown.pbrt"
+  },
+  {
+    "name": "sanmiguel-realistic-courtyard",
+    "path": "./sanmiguel/sanmiguel-realistic-courtyard.pbrt"
+  },
+  {
+    "name": "sanmiguel-upstairs-across",
+    "path": "./sanmiguel/sanmiguel-upstairs-across.pbrt"
+  },
+  {
+    "name": "sanmiguel-upstairs",
+    "path": "./sanmiguel/sanmiguel-upstairs.pbrt"
+  },
+  {
+    "name": "bunny-fur",
+    "path": "./bunny-fur/bunny-fur.pbrt"
+  }
 ]
