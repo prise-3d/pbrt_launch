@@ -32,7 +32,19 @@ def main():
     parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
 
     args = parser.parse_args()
-    print(args.basedir)
+    basedir = args.basedir
+    import os
+
+    # Scan all subdirectories and find the list of ".exr" files
+    exr_files = []
+    for root, dirs, files in os.walk(basedir):
+        for file in files:
+            if file.endswith(".exr"):
+                exr_files.append(os.path.join(root, file))
+
+    # Print the full path of all the ".exr" files
+    for exr_file in exr_files:
+        print(exr_file)
 
 
 
