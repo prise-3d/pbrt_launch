@@ -49,7 +49,9 @@ def main():
             if file.endswith(end):              
                 exr_files.append(os.path.join(root, file))
 
-    # Print the full path of all the ".exr" files
+
+    # Create a CSV file to store the statistics
+    csv_filename = args.output
     for exr_file in exr_files:
         l = exr_stats(exr_file)
         csvfile = open(csv_filename, 'a', newline='')
