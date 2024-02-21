@@ -212,10 +212,11 @@ def run_pbrt(scenes_list, sampler_list, integrator_list, args) :
                 logfile = os.path.join(args.output,basename,(basename+"_"+s_name+"_"+i_name+".log"))
 
                 cmd = "".join([args.pbrt," --spp ",str(args.spp)," ",
-                            "--outfile ",outfile," ",
+                            "--outfile ",outfile," --pixelstats ",
                             os.path.join(temp_dir,filename)])
                 
-                
+                print(cmd)
+                                
                 #result = subprocess.run(cmd, shell=True)
                 with open(logfile,'w') as f_log:
                     start_time_ns = time.process_time_ns()

@@ -21,3 +21,9 @@ ptional arguments:
                         Base directory for pbrt scenes.
   -p PBRT, --pbrt PBRT  path and name of pbrt binary (default = "pbrt")
 ```
+
+Exemple :
+```
+python3 launch_pbrt.py --spp 100 -b /mnt/data/common/pbrt-v4-scenes/ --pbrt /home/sam/prog/pbrt-contrib/build/pbrt
+```
+

@@ -11,6 +11,7 @@ def exr_stats(filename):
     # Read the EXR image
     exr_file = OpenEXR.InputFile(filename)
     header = exr_file.header()
+    
 
     # Get image size and channels
     width = header['dataWindow'].max.x + 1
@@ -20,6 +21,11 @@ def exr_stats(filename):
     print("image width ",width,"    height :",height,"    channels : ",channels)
 
     list_values = []
+    sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1)
+    integrator = re.search(r'[^_]+_([^_]+)-Integrators', filename).group(1)
+
+    list.append(sampler)
+    list.append(integrator) 
 
     for k, v in channels.items():
         print(k, v)
