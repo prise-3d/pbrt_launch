@@ -41,7 +41,7 @@ def exr_stats(filename):
 def main():
     parser = argparse.ArgumentParser(description='Script to produce statistics from a list of exr files')
 
-    parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
+    parser.add_argument('-b','--basedir', default='., help='Base directory where are exr files.')
     parser.add_argument('-e','--extension', default='.exr', help='end suffix of files to analyse (default .exr)')
     parser.add_argument('-o', '--output', default='output.csv', help='Output CSV file name (default: output.csv)')
 
