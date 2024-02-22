@@ -17,16 +17,12 @@
         "text": "Integrator \"randomwalk\"\n    \"integer maxdepth\" [ 8 ]\n"
     },
     {
-        "name": "simplevolpath",
-        "text": "Integrator \"simplevolpath\"\n    \"integer maxdepth\" [ 8 ]\n"
-    },
-    {
         "name": "simplepath",
         "text": "Integrator \"simplepath\"\n    \"integer maxdepth\" [ 8 ]\n"
     },
     {
-        "name": "randomwalk",
-        "text": "Integrator \"randomwalk\"\n    \"integer maxdepth\" [ 8 ]\n"
+        "name": "simplevolpath",
+        "text": "Integrator \"simplevolpath\"\n    \"integer maxdepth\" [ 8 ]\n"
     },
     {
         "name": "volpath",
