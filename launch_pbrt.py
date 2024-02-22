@@ -251,7 +251,7 @@ def main():
     parser.add_argument('--format', default='exr', help='File extension for output file (default exr)')
     parser.add_argument('-f', '--force', action='store_true', help='Force mode.')
     parser.add_argument('-o','--output', default='.', help='Output directory path with default value "./output".')
-    parser.add_argument('-b','--basedir', default='., help='Base directory for pbrt scenes.')
+    parser.add_argument('-b','--basedir', default='.', help='Base directory for pbrt scenes.')
     parser.add_argument('-p','--pbrt', default='pbrt', help='path and name of pbrt binary (default = "pbrt")')
     args = parser.parse_args()
     run_pbrt(scenes, samplers, integrators, args)
