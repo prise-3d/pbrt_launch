@@ -8,7 +8,7 @@ import argparse
 
 print("start")
 
-def exr_stats(filename):
+def exr_stats(filename, spp=64):
     # Read the EXR image
     exr_file = OpenEXR.InputFile(filename)
     header = exr_file.header()
@@ -34,16 +34,17 @@ def exr_stats(filename):
         #image = (flat_image.reshape(height, width)).ravel()
         #print(image.shape)
         channel_means = np.mean(flat_image)
-        list_values.append(channel_means)
+        list_values.append(channel_means/spp)
 
     return list_values    
 
 def main():
     parser = argparse.ArgumentParser(description='Script to produce statistics from a list of exr files')
-
-    parser.add_argument('-b','--basedir', default='., help='Base directory where are exr files.')
+    parser.add_argument('--spp', type=int, default=64, help='sample per pixel')
+    parser.add_argument('-b','--basedir', default='./output', help='Base directory where are exr files.')
     parser.add_argument('-e','--extension', default='.exr', help='end suffix of files to analyse (default .exr)')
     parser.add_argument('-o', '--output', default='output.csv', help='Output CSV file name (default: output.csv)')
+    
 
     args = parser.parse_args()
     end = args.extension
