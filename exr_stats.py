@@ -70,6 +70,7 @@ def main():
             row.append(v)
         csv_writer.writerow(row)
         csvfile.close()
+    print("file ",csv_filename," created")    
 
 
 if __name__ == "__main__":
