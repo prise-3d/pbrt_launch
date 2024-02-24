@@ -26,9 +26,7 @@ def exr_stats(filename, spp=64):
     sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1)
     integrator = re.search(r'[^_]+_([^_]+)-Integrators', filename).group(1)
 
-    list_values.append(scene)
-    list_values.append(sampler)
-    list_values.append(integrator) 
+    list_values.extend([scene, sampler, integrator])
 
     for k, v in channels.items():
         print(k, v)
