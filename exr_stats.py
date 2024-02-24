@@ -22,17 +22,17 @@ def exr_stats(filename, spp=64):
     print("image width ",width,"    height :",height,"    channels : ",channels)
 
     list_values = []
+    scene = re.search(r'^([^_]*)_.*', filename).group(1)
     sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1)
     integrator = re.search(r'[^_]+_([^_]+)-Integrators', filename).group(1)
 
+    list_values.append(scene)
     list_values.append(sampler)
     list_values.append(integrator) 
 
     for k, v in channels.items():
         print(k, v)
         flat_image = np.frombuffer(exr_file.channel(k), dtype=np.float32) 
-        #image = (flat_image.reshape(height, width)).ravel()
-        #print(image.shape)
         channel_means = np.mean(flat_image)
         list_values.append(channel_means/spp)
 
@@ -65,7 +65,7 @@ def main():
         l = exr_stats(exr_file)
         csvfile = open(csv_filename, 'a', newline='')
         csv_writer = csv.writer(csvfile)
-        row = [exr_file]
+        row = [csv_filename]
         for v in l:
             row.append(v)
         csv_writer.writerow(row)

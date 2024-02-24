@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Read the CSV file into a pandas DataFrame
-df = pd.read_csv("output.csv")
+df = pd.read_csv("stat_2024-02-22_15-30-27.csv")
 
 # Analyze the effects of the first three columns on the last column
 fourth_column_name = df.columns[3]
