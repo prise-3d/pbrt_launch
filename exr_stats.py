@@ -22,8 +22,8 @@ def exr_stats(filename, spp=64):
     print("image width ",width,"    height :",height,"    channels : ",channels)
 
     list_values = []
-    scene = re.sub(r'.*/([^_]*)_.+', r'\1',filename)
-    sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1)
+    scene = re.sub(r'.*/([^_]*)_.+', r'\1',filename) # after "/" but before "_"
+    sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1) 
     integrator = re.search(r'[^_]+_([^_]+)-Integrators', filename).group(1)
 
     list_values.extend([scene, sampler, integrator])
@@ -32,9 +32,10 @@ def exr_stats(filename, spp=64):
         print(k, v)
         flat_image = np.frombuffer(exr_file.channel(k), dtype=np.float32) 
         channel_means = np.mean(flat_image)
+        if (integrator == "randomwalk") :
+            channel_means /= 2 # temporary patch
         list_values.append(channel_means/spp)
 
-    print(list_values)
     return list_values    
 
 def main():
