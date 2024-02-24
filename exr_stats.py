@@ -34,6 +34,7 @@ def exr_stats(filename, spp=64):
         channel_means = np.mean(flat_image)
         list_values.append(channel_means/spp)
 
+    print(list_values)
     return list_values    
 
 def main():
@@ -63,7 +64,7 @@ def main():
         l = exr_stats(exr_file)
         csvfile = open(csv_filename, 'a', newline='')
         csv_writer = csv.writer(csvfile)
-        row = [csv_filename]
+        row = []
         for v in l:
             row.append(v)
         csv_writer.writerow(row)
