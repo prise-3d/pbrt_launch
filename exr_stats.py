@@ -22,7 +22,7 @@ def exr_stats(filename, spp=64):
     print("image width ",width,"    height :",height,"    channels : ",channels)
 
     list_values = []
-    scene = re.search(r'^([^_]*)_.*', filename).group(1)
+    scene = re.search(r'[^/]*\/([^_]*)_', filename).group(1)
     sampler = re.search(r'([^_]+)_[^_]+-Integrators', filename).group(1)
     integrator = re.search(r'[^_]+_([^_]+)-Integrators', filename).group(1)
 
