@@ -32,6 +32,8 @@ def analyze_effects(csv_file):
     sns.barplot(x="Scene", y=fourth_column_name, hue="Integrator", data=df, errorbar=None)
     plt.title("Effect of Scene and Integrator on " + fourth_column_name)
     plt.xlabel("Scene")
+    plt.xticks(rotation=45, ha='right')
+    plt.gca().set_xticklabels(sorted(df['Scene'].unique()))
     plt.ylabel(fourth_column_name)
     plt.xticks(rotation=45)
     plt.legend(title="Integrator")
@@ -40,3 +42,14 @@ def analyze_effects(csv_file):
     # Save the plot to a file or display it
     plt.savefig("effect_of_scene_and_integrator.png")
     print("done")
+
+
+def main():
+    # Specify the path to the CSV file
+    csv_file = "./output.csv"
+
+    # Call the analyze_effects function with the CSV file path
+    analyze_effects(csv_file)
+
+if __name__ == "__main__":
+    main()
