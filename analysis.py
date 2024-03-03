@@ -1,16 +1,18 @@
 import pandas as pd
 import seaborn as sns
+import argparse
 import matplotlib.pyplot as plt
 
 # Function to generate a barplot to visualize the variable for each combination of two columns
-def generate_barplot(df, x_column, y_column, hue_column, title):
+def generate_barplot(df, x_column, y_column, hue_column, title):    
+    df = df.sort_values(by=[x_column], ascending=True)
     plt.figure(figsize=(12, 6))
     sns.barplot(x=x_column, y=y_column, hue=hue_column, data=df, errorbar=None)
     plt.title(title)
     plt.xlabel(x_column)
-    plt.ylim(df[y_column].min(), df[y_column].max())
+    plt.ylim(0, df[y_column].max())
     plt.xticks(rotation=45, ha='right')
-    plt.gca().set_xticklabels(sorted(df[x_column].unique()))
+    df = df.sort_values(by=[x_column], ascending=False)
     plt.ylabel(y_column)
     plt.xticks(rotation=45)
     plt.legend(title=hue_column)
@@ -34,7 +36,12 @@ def analyze_effects(csv_file):
 
 def main():
     # Specify the path to the CSV file
-    csv_file = "stat_2024-02-22_15-30-27.csv"
+    parser = argparse.ArgumentParser(description='Process CSV file.')
+    parser.add_argument('csv_file', type=str, help='Path to the CSV file')
+
+    args = parser.parse_args()
+
+    csv_file = args.csv_file
 
     # Call the analyze_effects function with the CSV file path
     analyze_effects(csv_file)
